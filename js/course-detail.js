@@ -36,11 +36,20 @@ async function loadCourseData(courseId, userId) {
         const topicData = await topicsRes.json();
 
         // Validate
-        const course = allData.data.find(c => c.CourseID === courseId);
+        const courses = allData.data || [];
+const course = courses.find(c => c.CourseID === courseId);
+
+if (!course) {
+    throw new Error("Course not found");
+}
         if (!course) throw new Error("Course not found");
 
         const topics = topicData.data || [];
-        const progress = course.Progress || { topicsCompleted: 0, totalTopics: 0, progressPercentage: 0 };
+        const progress = {
+    topicsCompleted: Number(course.Progress?.topicsCompleted || 0),
+    totalTopics: Number(course.Progress?.totalTopics || 0),
+    progressPercentage: Number(course.Progress?.progressPercentage || 0)
+};
         const isEnrolled = progress.totalTopics > 0 || course.isEnrolled;
 
         // Render UI
@@ -72,6 +81,7 @@ function renderHeader(course, progress, isEnrolled) {
     safeSetText('course-title', course.Title);
     safeSetText('course-instructor', course.Instructor);
     safeSetText('course-duration', course.Duration);
+    safeSetText('course-instructor-name', course.Instructor);
     safeSetText('total-topics-count', `${course.TotalTopics || 0} Topics`);
     safeSetText('course-description', course.Description);
 
@@ -140,6 +150,21 @@ function renderCurriculum(topics, progress, isEnrolled) {
             </li>
         `;
     });
+    // What You'll Learn
+const learningList = document.getElementById('learning-list');
+
+if (learningList) {
+    learningList.innerHTML = "";
+
+    topics.forEach(topic => {
+        learningList.innerHTML += `
+            <li>
+                <i class="fas fa-check-circle" style="color:green;"></i>
+                ${topic.Title}
+            </li>
+        `;
+    });
+}
 }
 
 function renderActionBtn(course, progress, isEnrolled, topics) {
@@ -149,10 +174,16 @@ function renderActionBtn(course, progress, isEnrolled, topics) {
     if (isEnrolled) {
         const pct = progress.progressPercentage || 0;
         if (pct >= 100) {
-            btn.innerHTML = '<i class="fas fa-award"></i> View Certificate';
-            btn.style.background = '#badc58'; // Greenish
-            btn.style.color = '#1a2e05';
-            btn.onclick = (e) => { e.preventDefault(); downloadCertificate(); };
+            
+           btn.innerHTML = '<i class="fas fa-download"></i> Download Certificate';
+btn.style.background = '#badc58';
+btn.style.color = '#1a2e05';
+
+btn.onclick = (e) => {
+    e.preventDefault();
+    downloadCertificate();
+};
+          
         } else {
             // Find next topic
             let nextIndex = (progress.topicsCompleted || 0) + 1;
@@ -226,25 +257,33 @@ async function downloadCertificate() {
 
         const data = await response.json();
 
-        if (data.status === 'success') {
-            // Create Download Link
-            const link = document.createElement('a');
-            link.href = "data:application/pdf;base64," + data.base64;
-            link.download = data.fileName || "Certificate.pdf";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Success UI
-            if(btn) btn.innerHTML = '<i class="fas fa-check"></i> Downloaded';
-        } else {
-            alert("Server Error: " + data.message);
-            if(btn) btn.innerHTML = '<i class="fas fa-download"></i> Try Again';
-        }
-    } catch (e) {
+if (data.status === 'success') {
+
+    const link = document.createElement("a");
+link.href = "data:application/pdf;base64," + data.base64;
+link.download = data.fileName || "Certificate.pdf";
+
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+
+    if (btn) {
+btn.innerHTML = '<i class="fas fa-check"></i> Downloaded';
+    }
+
+} else {
+
+    alert("Server Error: " + data.message);
+
+    if (btn) {
+btn.innerHTML = '<i class="fas fa-download"></i> Download Certificate';    }
+
+}    } catch (e) {
         console.error(e);
         alert("Network Error: " + e.message);
-        if(btn) btn.innerHTML = '<i class="fas fa-download"></i> Try Again';
+    if (btn) {
+    btn.innerHTML = '<i class="fas fa-download"></i> Download Certificate';
+}
     } finally {
         if(btn) btn.disabled = false;
         if(load) load.style.display = 'none';

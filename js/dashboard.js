@@ -1,6 +1,6 @@
 // js/dashboard.js - FIXED: Duplicate Auth Check Removed
 
-var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0a9i4wDEMqv43FT1xMQ12WcS1NeXqMzPWIHfGmMrJ6PpXT57eqQrckpDPzB6_grUDaQ/exec";
+var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwSFoZoCCP8i1S2JoCEggMsN0YlnSYIx527yOAw-KfIr1T7zTr_uaI-eB81gr_-HQXj/exec";
 
 // --- New Dark Mode Logic ---
 function setupDarkModeToggle() {

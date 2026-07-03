@@ -218,7 +218,7 @@
 
   </style>
   
-  <script>const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0a9i4wDEMqv43FT1xMQ12WcS1NeXqMzPWIHfGmMrJ6PpXT57eqQrckpDPzB6_grUDaQ/exec";</script>
+  <script>const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwSFoZoCCP8i1S2JoCEggMsN0YlnSYIx527yOAw-KfIr1T7zTr_uaI-eB81gr_-HQXj/exec";</script>
 </head>
 
 <body data-theme="dark">
@@ -293,6 +293,7 @@
       <div class="tabs" data-aos="fade-up" data-aos-delay="100">
           <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
           <button class="tab-btn" onclick="switchTab('curriculum')">Curriculum</button>
+          <button class="tab-btn" onclick="switchTab('includes')">Course Includes</button>
       </div>
 
       <div id="overview" class="section-card active">
@@ -304,6 +305,83 @@
           <div class="action-area">
               <a href="#" id="main-action-btn" class="main-btn">Enroll Now</a>
           </div>
+
+          <!-- What You'll Learn -->
+
+<div class="section-card" style="margin-top:25px;">
+
+<h3>
+<i class="fas fa-graduation-cap"></i>
+What You'll Learn
+</h3>
+
+<ul id="learning-list">
+
+<li>Loading...</li>
+
+</ul>
+
+</div>
+
+<!-- Instructor -->
+
+<div class="section-card" style="margin-top:25px;">
+
+<h3>
+<i class="fas fa-user"></i>
+Instructor
+</h3>
+
+<p id="course-instructor-name">
+Loading...
+</p>
+
+</div>
+
+<!-- Student Reviews -->
+
+<div class="section-card" style="margin-top:25px;">
+
+<h3>
+<i class="fas fa-star"></i>
+Student Reviews
+</h3>
+
+<div class="review">
+
+⭐⭐⭐⭐⭐
+
+<p>
+Excellent course with practical examples.
+</p>
+
+</div>
+
+<hr>
+
+<div class="review">
+
+⭐⭐⭐⭐⭐
+
+<p>
+Easy to understand for beginners.
+</p>
+
+</div>
+
+<hr>
+
+<div class="review">
+
+⭐⭐⭐⭐⭐
+
+<p>
+Assignments and MCQs are very helpful.
+</p>
+
+</div>
+
+</div>
       </div>
 
       <div id="curriculum" class="section-card">
@@ -315,6 +393,28 @@
 
     </main>
   </div>
+  <div class="section-card" style="margin-top:25px;">
+
+    <div class="section-title">
+        <i class="fas fa-box-open"></i>
+        Course Includes
+    </div>
+
+    <ul class="includes-list">
+
+        <li><i class="fas fa-video"></i> Video Lectures</li>
+
+        <li><i class="fas fa-file-pdf"></i> Study Notes (PDF)</li>
+
+        <li><i class="fas fa-tasks"></i> Assignments</li>
+
+        <li><i class="fas fa-question-circle"></i> MCQ Tests</li>
+
+        <li><i class="fas fa-certificate"></i> Certificate of Completion</li>
+
+    </ul>
+
+</div>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>

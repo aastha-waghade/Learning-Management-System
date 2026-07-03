@@ -404,7 +404,31 @@
             <li><a href="aboutus.html" class="active">ABOUT</a></li>
             <li><a href="instructors.html">INSTRUCTORS</a></li>
             <li><a href="placement.html">PLACEMENTS</a></li>
-            <li><a href="login.html" class="btn-red">Login / Join</a></li>
+    <li id="login-btn">
+    <a href="login.html" class="btn-red">
+        Login / Join
+    </a>
+  </li>
+
+<li id="user-profile"
+style="display:none;align-items:center;gap:10px;cursor:pointer;">
+
+    <div id="user-avatar"
+         style="width:40px;
+                height:40px;
+                border-radius:50%;
+                background:#fff;
+                color:#8a0b8a;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-weight:bold;">
+    </li>
+
+    <span id="user-name"
+          style="color:white;font-weight:600;"></span>
+
+  </li>
         </ul>
         <div class="nav-right-controls">
             <button id="themeToggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
@@ -649,5 +673,6 @@
       updateCount();
     });
   </script>
+  <script src="js/home-auth.js"></script>
 </body>
 </html>

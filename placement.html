@@ -466,7 +466,33 @@
             <li><a href="aboutus.html">ABOUT</a></li>
             <li><a href="instructors.html">INSTRUCTORS</a></li>
             <li><a href="placement.html" class="active">PLACEMENTS</a></li>
-            <li><a href="login.html" class="btn-red">Login / Join</a></li>
+            <li id="login-btn">
+    <a href="login.html" class="btn-red">
+        Login / Join
+    </a>
+</li>
+
+<li id="user-profile"
+    style="display:none;align-items:center;gap:10px;cursor:pointer;">
+
+    <div id="user-avatar"
+         style="width:40px;
+                height:40px;
+                border-radius:50%;
+                background:linear-gradient(135deg,#8a0b8a,#4b0082);
+color:white;
+border:2px solid white;
+                color:#8a0b8a;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-weight:bold;">
+    </div>
+
+    <span id="user-name"
+          style="color:white;font-weight:600;"></span>
+
+</li>
         </ul>
         <div class="nav-right-controls">
             <button id="themeToggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
@@ -618,7 +644,18 @@
           <div class="cta-box">
               <h2>Ready to Start Your Success Story?</h2>
               <p>Join the next batch and take the first step towards your dream career.</p>
-              <a href="login.html" class="btn-white">Apply Now</a>
+              <a href="login.html"
+   class="btn-white"
+   id="apply-btn">
+Apply Now
+</a>
+
+<a href="dashboard.html"
+   class="btn-white"
+   id="dashboard-btn"
+   style="display:none;">
+Go to Dashboard
+</a>
           </div>
       </div>
   </div>
@@ -747,5 +784,6 @@
       updateCount();
     });
   </script>
+  <script src="js/home-auth.js"></script>
 </body>
 </html>

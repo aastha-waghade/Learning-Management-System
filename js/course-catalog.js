@@ -4,7 +4,7 @@
  //const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw.../exec";
 
 // Use API_URL from config.js if available, otherwise fallback (replace with your actual URL)
-const API_URL = (typeof GOOGLE_SCRIPT_URL !== 'undefined') ? GOOGLE_SCRIPT_URL : "https://script.google.com/macros/s/AKfycbz0a9i4wDEMqv43FT1xMQ12WcS1NeXqMzPWIHfGmMrJ6PpXT57eqQrckpDPzB6_grUDaQ/exec"; 
+const API_URL = (typeof GOOGLE_SCRIPT_URL !== 'undefined') ? GOOGLE_SCRIPT_URL : "https://script.google.com/macros/s/AKfycbwSFoZoCCP8i1S2JoCEggMsN0YlnSYIx527yOAw-KfIr1T7zTr_uaI-eB81gr_-HQXj/exec"; 
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Auth and Navigation Update

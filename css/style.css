@@ -681,7 +681,88 @@ body {
 }
 .mcq-review-item { margin-bottom: 8px; }
 .mcq-review-status { font-weight: 600; }
+/* ===== COURSE DETAIL NEW SECTIONS ===== */
 
+#learning-list,
+.includes-list{
+    list-style:none;
+    padding:0;
+    margin-top:15px;
+}
 
+#learning-list li,
+.includes-list li{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 15px;
+    margin-bottom:12px;
+    background:#f8fbff;
+    border:1px solid #e4ecf7;
+    border-radius:12px;
+    transition:.3s;
+    font-size:15px;
+}
+
+#learning-list li:hover,
+.includes-list li:hover{
+    transform:translateX(5px);
+    background:#eef7ff;
+}
+
+.review{
+    padding:15px;
+}
+
+.review p{
+    margin-top:8px;
+    color:#666;
+}
+
+#course-instructor-name{
+    font-size:18px;
+    font-weight:600;
+    color:#2563eb;
+}
+.course-footer a:last-child{
+    color:#222 !important;
+    background:#ffffff;
+}
+
+body[data-theme="dark"] .course-footer a:last-child{
+    color:#ffffff !important;
+    background:#2b2b2b;
+}
+.btn-view{
+    color:#333 !important;
+    background:#ffffff;
+    border:1px solid #ddd;
+}
+
+body[data-theme="dark"] .btn-view{
+    color:#ffffff !important;
+    background:#2b2b2b;
+    border:1px solid #555;
+}
+.btn-action.btn-view{
+    background:#ffffff !important;
+    color:#222 !important;
+    border:1px solid #ddd;
+}
+
+.btn-action.btn-view:hover{
+    background:#f5f5f5 !important;
+    color:#000 !important;
+}
+
+body[data-theme="dark"] .btn-action.btn-view{
+    background:#2b2b2b !important;
+    color:#ffffff !important;
+    border:1px solid #555;
+}
+
+body[data-theme="dark"] .btn-action.btn-view:hover{
+    background:#3a3a3a !important;
+}
 
 

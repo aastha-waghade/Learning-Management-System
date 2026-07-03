@@ -104,59 +104,6 @@ function updateNextTopicLockInList(canGoNextFromThis) {
 
 /* ================== LOAD SINGLE TOPIC ================== */
 
-async function loadTopic(courseId, topicIndex) {
-  const titleEl = document.getElementById('topic-title');
-  showLoading(titleEl, 'Loading topic...');
-
-  try {
-    const params = new URLSearchParams({
-      action: 'getTopicDetail',
-      courseId: courseId,
-      topicIndex: topicIndex,     // 1-based
-      userId: window.userId
-    });
-
-    const response = await fetch(`${GOOGLE_SCRIPT_URL}?${params.toString()}`);
-    const data = await response.json();
-
-    if (data.status === 'success' && data.data) {
-      const topic = data.data;
-
-      currentTopicID        = topic.TopicID;
-      totalTopics           = topic.TotalTopics || 0;
-      currentTopicIndex     = parseInt(topic.TopicIndex || topicIndex);
-
-      // Flags from backend
-      const topicCompleted    = !!data.isCompleted;
-      const assignmentDone    = !!data.isAssignmentCompleted;
-      
-      const canGoNextFromThis = topicCompleted && assignmentDone;
-
-      // MCQ completed flag
-      mcqCompleted = assignmentDone;
-
-      displayTopicContent(topic);
-
-      // Yahin se navigation aur lock handle karenge
-      updateNavigationButtons(canGoNextFromThis);
-      updateNextTopicLockInList(canGoNextFromThis);
-
-      // Sirf jab topic unlocked ho tab MCQ load
-      await loadMCQAssignment(currentCourseId, currentTopicID);
-
-      // Mark complete button state
-      updateCompletionStatus(topicCompleted);
-      updateAssignmentControls();
-      
-    } else {
-      console.error('getTopicDetail error:', data.message);
-      throw new Error(data.message || 'Topic not found');
-    }
-  } catch (error) {
-    console.error('Topic load error:', error);
-    showError('Failed to load topic');
-  }
-}
 
 /* ================== MARK COMPLETE (UPDATED LOGIC) ================== */
 
@@ -554,58 +501,7 @@ function showMCQReview(perQuestionResult) {
     reviewEl.innerHTML = html;
 }
 
-function displayTopicContent(topic) {
-  const titleEl = document.getElementById('topic-title');
-  if (titleEl) {
-    titleEl.textContent = `${topic.TopicIndex}. ${topic.Title}`;
-    titleEl.classList.remove('loading');
-  }
 
-  document.getElementById('video-duration').textContent = topic.Duration || 'Not specified';
-  document.getElementById('topic-level').textContent = topic.Level || 'Beginner';
-  document.getElementById('topic-objectives').textContent = topic.Objectives || 'Learn core concepts';
-  document.getElementById('topic-status').textContent = topic.Status || 'In Progress';
-  document.getElementById('topic-description').textContent = topic.Description || 'Topic description...';
-
-  const notesEl = document.getElementById('topic-notes');
-  if (notesEl) {
-    if (topic.NotesURL && topic.NotesURL.trim() !== '') {
-      notesEl.innerHTML = `<a href="${topic.NotesURL}" target="_blank" class="btn-primary">📖 Open Notes / PDF</a>`;
-    } else {
-      notesEl.innerHTML = '<span class="text-muted">No notes for this topic.</span>';
-    }
-  }
-
-  const videoFrame = document.getElementById('topic-video');
-  if (videoFrame) {
-    if (topic.VideoURL) {
-      let videoId = "";
-      if(topic.VideoURL.includes('v=')) {
-          videoId = topic.VideoURL.split('v=')[1].split('&')[0];
-      } else {
-          videoId = topic.VideoURL.split('/').pop();
-      }
-      videoFrame.src = `https://www.youtube.com/embed/${videoId}`;
-    } else {
-      videoFrame.src = '';
-    }
-  }
-
-  const sidebarTitle = document.getElementById('course-title-sidebar');
-  if (sidebarTitle) sidebarTitle.textContent = topic.CourseTitle || `Course ID: ${currentCourseId}`;
-
-  const progressEl = document.getElementById('topic-progress');
-  const progressFill = document.getElementById('progress-fill');
-  const currentNum = document.getElementById('current-topic-num');
-  const totalNum = document.getElementById('total-topics-num');
-
-  const pct = Math.round((topic.TopicIndex / totalTopics) * 100) || 0;
-
-  if (progressEl) progressEl.textContent = `${pct}%`;
-  if (progressFill) progressFill.style.width = `${pct}%`;
-  if (currentNum) currentNum.textContent = topic.TopicIndex;
-  if (totalNum) totalNum.textContent = totalTopics;
-}
 
 async function loadSidebarTopics(courseId) {
   const listContainer = document.getElementById('sidebar-topic-list');

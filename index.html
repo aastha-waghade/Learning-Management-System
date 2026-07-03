@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -1688,13 +1688,42 @@ section-heading
           <li><a href="aboutus.html">ABOUT</a></li>
           <li><a href="placement.html">PLACEMENTS</a></li>
           <li><a href="instructors.html">INSTRUCTOR</a></li>
-          <li class="mobile-only"><a href="login.html" class="btn-red">Login/Register</a></li>
+          <li class="mobile-only">
+    <a href="login.html"
+       class="btn-red"
+       id="mobile-login-btn">
+        Login/Register
+    </a>
+
+    <a href="dashboard.html"
+       class="btn-red"
+       id="mobile-dashboard-btn"
+       style="display:none;">
+        Dashboard
+    </a>
+</li>
       </ul>
 
       <div class="nav-right-side">
           
-          <a href="login.html" class="btn-red desktop-only">Login/Register</a>
+        <div id="user-nav-area" class="desktop-only">
+    <a href="login.html" id="login-btn" class="btn-red">
+        Login/Register
+    </a>
 
+    <div id="user-profile" style="display:none; align-items:center; gap:10px; cursor:pointer;">
+        <div id="user-avatar"
+             style="width:42px;height:42px;border-radius:50%;
+             background:#790c72;color:white;
+             display:flex;
+             align-items:center;
+             justify-content:center;
+             font-weight:bold;">
+        </div>
+
+        <span id="user-name"></span>
+    </div>
+</div>
           <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
               <i class="fas fa-sun" style="display: none;"></i>
               <i class="fas fa-moon"></i>
@@ -1720,7 +1749,18 @@ section-heading
       <h1>WELCOME TO <span>CODELINE AI</span></h1>
       <p>Build real projects, get mentored, and land your dream job at top tech companies.</p>
       <br>
-      <a href="login.html" class="btn-red-large">JOIN US NOW!</a>
+      <a href="login.html"
+   class="btn-red-large"
+   id="hero-join-btn">
+    JOIN US NOW!
+</a>
+
+<a href="dashboard.html"
+   class="btn-red-large"
+   id="continue-btn"
+   style="display:none;">
+    CONTINUE LEARNING
+</a>
     </div>
   </section>
 
@@ -1772,7 +1812,7 @@ section-heading
         
         <div class="why-image-single" data-aos="fade-right" data-aos-duration="1000">
             <div class="main-image-wrapper">
-                <img src="\Codeline Img.png" alt="Learning at Codeline AI">
+               <img src="Codeline Img.png">  alt="Learning at Codeline AI">
             </div>
         </div>
 
@@ -1790,7 +1830,18 @@ section-heading
                 <div class="feature-item"><i class="fas fa-check-circle"></i> Recognized Certification</div>
             </div>
 
-            <a href="#" class="btn-red-large">Start Your Journey</a>
+            <a href="login.html"
+   class="btn-red-large"
+   id="journey-btn">
+Start Your Journey
+</a>
+
+<a href="dashboard.html"
+   class="btn-red-large"
+   id="dashboard-btn"
+   style="display:none;">
+Go to Dashboard
+</a>
         </div>
     </div>
   </section>
@@ -1907,7 +1958,7 @@ section-heading
   
 
 
-<section class="ad-section">
+<section class="ad-section" id="offer-section"></section>
   
   <div class="container">
     <div class="section-heading-centered" data-aos="fade-up">
@@ -2528,7 +2579,7 @@ var adSwiper = new Swiper(".adSwiper", {
 </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
  <script src="js/config.js"></script>
-
+<script src="js/home-auth.js"></script>
  <script src="js/course-catalog.js"></script>
 
 </body>
