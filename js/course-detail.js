@@ -84,6 +84,10 @@ function renderHeader(course, progress, isEnrolled) {
     safeSetText('course-instructor-name', course.Instructor);
     safeSetText('total-topics-count', `${course.TotalTopics || 0} Topics`);
     safeSetText('course-description', course.Description);
+    // Overview Information
+safeSetText('overview-topics', `${course.TotalTopics || 0} Topics`);
+safeSetText('overview-duration', course.Duration || 'N/A');
+safeSetText('overview-instructor', course.Instructor || 'N/A');
 
     // Progress Bar Logic
     if (isEnrolled) {
@@ -215,7 +219,10 @@ async function enrollUser(courseId) {
             courseId: courseId
         });
         
-        await fetch(`${GOOGLE_SCRIPT_URL}?${params}`, { method: 'POST' });
+        await fetch(GOOGLE_SCRIPT_URL, {
+    method: "POST",
+    body: params
+});
         
         alert("Enrolled Successfully! 🎉");
         window.location.reload(); 

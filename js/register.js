@@ -1,4 +1,4 @@
-var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwSFoZoCCP8i1S2JoCEggMsN0YlnSYIx527yOAw-KfIr1T7zTr_uaI-eB81gr_-HQXj/exec";
+var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwIwuY6c-NidD6wAKCbdoI3ANwTf-WgHNuQhneBvIVhEO3skuywL8etHTmA5rAYJxNO/exec";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const userId = localStorage.getItem('lsm_user_id');

@@ -1,4 +1,4 @@
-var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwSFoZoCCP8i1S2JoCEggMsN0YlnSYIx527yOAw-KfIr1T7zTr_uaI-eB81gr_-HQXj/exec";
+var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwIwuY6c-NidD6wAKCbdoI3ANwTf-WgHNuQhneBvIVhEO3skuywL8etHTmA5rAYJxNO/exec";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const userId = localStorage.getItem('lsm_user_id');
@@ -32,7 +32,7 @@ async function fetchProgressData(userId, loader, content) {
 
         if (data.status === 'success' && data.data) {
             // Filter enrolled courses only
-            const enrolledCourses = data.data.filter(c => c.Progress !== null && c.Progress !== undefined);
+            const enrolledCourses = data.data.filter(c => c.isEnrolled === true);
             
             if (enrolledCourses.length > 0) {
                 renderCards(enrolledCourses, userId);
@@ -68,25 +68,37 @@ function renderCards(courses, userId) {
     list.innerHTML = '';
 
     courses.forEach(course => {
-        const progress = course.Progress || {};
-        const pct = progress.progressPercentage || 0;
-        const completed = progress.topicsCompleted || 0;
-        const total = progress.totalTopics || 0;
+        const progress = course.Progress || {
+    progressPercentage: 0,
+    topicsCompleted: 0,
+    totalTopics: 0
+};
+
+const pct = Number(progress.progressPercentage) || 0;
+const completed = Number(progress.topicsCompleted) || 0;
+const total = Number(progress.totalTopics) || course.TotalTopics || 0;
 
         // Get Styling based on Course Title (Matching My Courses)
         const style = getCourseStyle(course.Title);
 
         // Logic for Button Link
         let nextTopic = completed + 1;
-        let link = `course-topic.html?courseId=${course.CourseID}&userId=${userId}&topicIndex=${nextTopic}`;
-        let btnText = "Continue Learning";
-        
-        if(pct >= 100) {
-            btnText = "View Certificate";
-            link = `certificate.html?courseId=${course.CourseID}&userId=${userId}`;
-        } else if (pct === 0) {
-            btnText = "Start Course";
-        }
+
+if (nextTopic > total) {
+    nextTopic = total || 1;
+}
+
+let link = `course-detail.html?id=${course.CourseID}`;
+let btnText = "Start Course";
+
+if (pct > 0 && pct < 100) {
+    btnText = "Continue Learning";
+}
+
+if (pct >= 100) {
+    btnText = "View Certificate";
+    link = `course-detail.html?id=${course.CourseID}`;
+}
 
         const html = `
         <div class="progress-card">

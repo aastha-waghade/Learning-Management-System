@@ -4,7 +4,7 @@
  //const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw.../exec";
 
 // Use API_URL from config.js if available, otherwise fallback (replace with your actual URL)
-const API_URL = (typeof GOOGLE_SCRIPT_URL !== 'undefined') ? GOOGLE_SCRIPT_URL : "https://script.google.com/macros/s/AKfycbwSFoZoCCP8i1S2JoCEggMsN0YlnSYIx527yOAw-KfIr1T7zTr_uaI-eB81gr_-HQXj/exec"; 
+const API_URL = (typeof GOOGLE_SCRIPT_URL !== 'undefined') ? GOOGLE_SCRIPT_URL : "https://script.google.com/macros/s/AKfycbwIwuY6c-NidD6wAKCbdoI3ANwTf-WgHNuQhneBvIVhEO3skuywL8etHTmA5rAYJxNO/exec"; 
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Auth and Navigation Update
@@ -81,8 +81,9 @@ function displayCatalog(courses, progressMap, catalogContainer) {
   catalogContainer.innerHTML = ''; // Clear loading
 
   const cardsHTML = courses.map(course => {
-    const isEnrolled = progressMap[course.CourseID] !== undefined;
-
+const isEnrolled =
+    course.isEnrolled === true ||
+    progressMap[course.CourseID] !== undefined;
     // Description
     const descriptionText = String(course.Description || "").trim();
     const shortDescription =
@@ -103,11 +104,20 @@ function displayCatalog(courses, progressMap, catalogContainer) {
     let actionButtons = "";
 
     if (isEnrolled) {
-      const courseProgress = progressMap[course.CourseID];
-      let nextTopicIndex = (courseProgress.topicsCompleted || 0) + 1;
-      if (courseProgress.totalTopics && nextTopicIndex > courseProgress.totalTopics) {
-        nextTopicIndex = 1;
-      }
+      const courseProgress = progressMap[course.CourseID] || {
+    topicsCompleted: 0,
+    totalTopics: course.TotalTopics || 0
+};
+
+let nextTopicIndex = courseProgress.topicsCompleted + 1;
+
+if (
+    courseProgress.totalTopics &&
+    nextTopicIndex > courseProgress.totalTopics
+) {
+    nextTopicIndex = 1;
+}
+      
 
       const continueUrl =
         `course-topic.html?courseId=${course.CourseID}` +

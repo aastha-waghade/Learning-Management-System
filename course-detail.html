@@ -291,9 +291,9 @@
       </section>
 
       <div class="tabs" data-aos="fade-up" data-aos-delay="100">
-          <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
-          <button class="tab-btn" onclick="switchTab('curriculum')">Curriculum</button>
-          <button class="tab-btn" onclick="switchTab('includes')">Course Includes</button>
+          <button class="tab-btn active" onclick="switchTab('overview', this)">Overview</button>
+          <button class="tab-btn" onclick="switchTab('curriculum', this)">Curriculum</button>
+          <button class="tab-btn" onclick="switchTab('includes', this)">Course Includes</button>
       </div>
 
       <div id="overview" class="section-card active">
@@ -301,6 +301,33 @@
           <p id="course-description" style="line-height:1.8; color:var(--text-dim); margin-bottom:20px;">
               Loading description...
           </p>
+          <div class="course-info-grid">
+
+    <div class="info-box">
+        <i class="fas fa-layer-group"></i>
+        <h4>Total Topics</h4>
+        <span id="overview-topics">Loading...</span>
+    </div>
+
+    <div class="info-box">
+        <i class="fas fa-clock"></i>
+        <h4>Duration</h4>
+        <span id="overview-duration">Loading...</span>
+    </div>
+
+    <div class="info-box">
+        <i class="fas fa-user-tie"></i>
+        <h4>Instructor</h4>
+        <span id="overview-instructor">Loading...</span>
+    </div>
+
+    <div class="info-box">
+        <i class="fas fa-certificate"></i>
+        <h4>Certificate</h4>
+        <span>Available</span>
+    </div>
+
+</div>
           
           <div class="action-area">
               <a href="#" id="main-action-btn" class="main-btn">Enroll Now</a>
@@ -390,10 +417,7 @@ Assignments and MCQs are very helpful.
               <li style="padding:20px; text-align:center; color:var(--text-dim);">Loading topics...</li>
           </ul>
       </div>
-
-    </main>
-  </div>
-  <div class="section-card" style="margin-top:25px;">
+      <div id="includes" class="section-card">
 
     <div class="section-title">
         <i class="fas fa-box-open"></i>
@@ -415,6 +439,10 @@ Assignments and MCQs are very helpful.
     </ul>
 
 </div>
+
+    </main>
+  </div>
+  
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
@@ -446,12 +474,13 @@ Assignments and MCQs are very helpful.
     }
 
     // Tab Switcher
-    function switchTab(tabId) {
-        document.querySelectorAll('.section-card').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        event.target.classList.add('active');
-    }
+    function switchTab(tabId, button) {
+    document.querySelectorAll('.section-card').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+    document.getElementById(tabId).classList.add('active');
+    button.classList.add('active');
+}
   </script>
 
   <script src="js/course-detail.js"></script>

@@ -1,5 +1,4 @@
-var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwSFoZoCCP8i1S2JoCEggMsN0YlnSYIx527yOAw-KfIr1T7zTr_uaI-eB81gr_-HQXj/exec";
-
+var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwIwuY6c-NidD6wAKCbdoI3ANwTf-WgHNuQhneBvIVhEO3skuywL8etHTmA5rAYJxNO/exec";
 // 1. Page Load Event
 document.addEventListener('DOMContentLoaded', async () => {
     // Dark Mode Sync
@@ -47,7 +46,9 @@ async function loadMyCourses(userId, container, loader) {
 
         if (data.status === 'success' && data.data && data.data.length > 0) {
             // Filter: Only show enrolled courses
-            const enrolledCourses = data.data.filter(c => c.Progress !== null && c.Progress !== undefined);
+            const enrolledCourses = data.data.filter(c =>
+    c.isEnrolled === true
+);
             
             if(enrolledCourses.length > 0){
                 renderCourses(enrolledCourses, userId, container);
@@ -73,8 +74,13 @@ function renderCourses(courses, userId, container) {
     container.innerHTML = '';
 
     courses.forEach(course => {
-        const progress = course.Progress || { progressPercentage: 0 };
-        const percent = progress.progressPercentage || 0;
+        const progress = course.Progress || {
+    progressPercentage: 0,
+    topicsCompleted: 0,
+    totalTopics: 0
+};
+
+const percent = Number(progress.progressPercentage) || 0;
         
         // 🔥 FIX: Always link to Course Detail Page first
         // User should see overview/curriculum before jumping to video

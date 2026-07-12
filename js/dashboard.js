@@ -1,6 +1,6 @@
 // js/dashboard.js - FIXED: Duplicate Auth Check Removed
 
-var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwSFoZoCCP8i1S2JoCEggMsN0YlnSYIx527yOAw-KfIr1T7zTr_uaI-eB81gr_-HQXj/exec";
+var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwIwuY6c-NidD6wAKCbdoI3ANwTf-WgHNuQhneBvIVhEO3skuywL8etHTmA5rAYJxNO/exec";
 
 // --- New Dark Mode Logic ---
 function setupDarkModeToggle() {
@@ -110,11 +110,9 @@ async function loadDashboardStats(userId) {
 
     if (data.status === 'success' && Array.isArray(data.data)) {
       // 🔥 FIXED: Filter for ENROLLED courses (Progress is not null/undefined)
-      const enrolledCourses = data.data.filter(course => 
-        course.Progress !== null && 
-        course.Progress !== undefined && 
-        course.Progress.totalTopics > 0
-      );
+      const enrolledCourses = data.data.filter(course =>
+    course.isEnrolled === true
+);
       
       updateDashboardStats(enrolledCourses, stats);
     } else {
@@ -136,9 +134,11 @@ function updateDashboardStats(enrolledCourses, stats) {
   let totalProgress = 0;
   if (enrolledCount > 0) {
     totalProgress = enrolledCourses.reduce(
-      (sum, course) => sum + (course.Progress.progressPercentage || 0),
-      0
-    ) / enrolledCount;
+    (sum, course) => {
+        return sum + (course.Progress?.progressPercentage || 0);
+    },
+    0
+) / enrolledCount;
   }
 
   if (stats.overallProgressEl) {
@@ -164,9 +164,8 @@ function updateDashboardStats(enrolledCourses, stats) {
         <div class="activity-item">
           <div>
             <strong>Progress Check</strong>
-            <p>${recentCourse.Progress.topicsCompleted || 0}/${recentCourse.Progress.totalTopics || 0} topics completed</p>
-          </div>
-          <span class="status-tag" style="color:var(--accent); background:rgba(6,182,212,0.15);">⏳ ${recentCourse.Progress.progressPercentage}% Done</span>
+<p>${recentCourse.Progress?.topicsCompleted || 0}/${recentCourse.Progress?.totalTopics || 0} topics completed</p>          </div>
+          <span class="status-tag" style="color:var(--accent); background:rgba(6,182,212,0.15);">⏳ ${recentCourse.Progress?.progressPercentage || 0}% Done</span>
         </div>
       `;
     } else {
